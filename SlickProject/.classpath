@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="Library/jinput.jar"/>
+	<classpathentry kind="lib" path="Library/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="Library/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Slick/native"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="Library/slick.jar" sourcepath="LibrarySource/SlickSrc.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Slick/JavaDoc/SlickJavaDoc.zip!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
