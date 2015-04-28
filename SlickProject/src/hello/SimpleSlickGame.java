@@ -3,12 +3,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
+
+
+import org.lwjgl.input.Cursor;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
 import drawable.Target;
 
 public class SimpleSlickGame extends BasicGame{
@@ -30,6 +34,12 @@ public class SimpleSlickGame extends BasicGame{
 		x = gc.getWidth()/2-image.getWidth()/2;
 		y = gc.getHeight()/2-image.getHeight()/2;
 		
+		Image x =new Image("Resources/blah.png");
+		
+		System.out.println(String.format("x: %5s \ny: %5s", x.getWidth()/2, x.getHeight()/2));
+		
+		//gc.setMouseCursor(x, x.getWidth()/2, x.getHeight()/2);
+		
 		ship = new Target(20,20,50,50);
 		
 		
@@ -49,7 +59,7 @@ public class SimpleSlickGame extends BasicGame{
 		
 		deg = (float) Math.toDegrees(angle);
 		
-		
+		System.out.println("x:"+gc.getInput().getAbsoluteMouseX()+" y:"+gc.getInput().getAbsoluteMouseY());
 	}
 
 	@Override
@@ -70,7 +80,8 @@ public class SimpleSlickGame extends BasicGame{
 		{
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new SimpleSlickGame("Simple Slick Game"));
-			//appgc.setMultiSample(2);
+			appgc.setMultiSample(8);
+			//appgc.setTargetFrameRate(60);
 			appgc.setDisplayMode(640, 480, false);
 			appgc.start();
 		}

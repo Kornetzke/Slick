@@ -40,13 +40,24 @@ public class Target {
 
 	public void draw(GameContainer gc, Graphics g) {
 
-		g.setAntiAlias(true);
+		//g.setAntiAlias(true);
 		g.setLineWidth(2.0f);
 		g.setColor(Color.pink);
 		g.drawLine(x, y + height, x + width / 2, y);
 		g.drawLine(x + width / 2, y, x+width, y + height);
 		g.drawLine(x + width, y + height, x, y + height);
-
+		g.setColor(Color.red);
+		/*
+		g.drawRect(x+width/2-2, y+height/2-2, 4, 4);
+		g.drawRect(x+width-2, y+height/2-2, 4, 4);
+		g.drawRect(x+width-2, y+height-2, 4, 4);
+		g.drawRect(x+width/2-2, y+height-2, 4, 4);
+		g.drawRect(x-2, y+height-2, 4, 4);
+		g.drawRect(x+width-2, y-2, 4, 4);
+		g.drawRect(x+width/2-2, y-2, 4, 4);
+		g.drawRect(x-2, y+height/2-2, 4, 4);
+		g.drawRect(x-2, y-2, 4, 4);
+*/
 	}
 
 	public float getX() {
