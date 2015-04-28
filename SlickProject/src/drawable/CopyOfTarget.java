@@ -4,38 +4,30 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 
-public class Target extends Drawable{
+public class CopyOfTarget extends Movable{
 
-	float xSpeed,ySpeed,totalSpeed;
+	
 
-	public Target() {
+	public CopyOfTarget() {
 		x = y = width = height = 0;
 	}
 
-	public Target(float x, float y, float width, float height) {
+	public CopyOfTarget(float x, float y, float width, float height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		
-		xSpeed = (float)(70.0f+Math.random()*30);
-		ySpeed = (float)(70.0f+Math.random()*30);
+		this.direction = 0;
+		
+		speed = (float)(70.0f+Math.random()*30);
 
 	}
 
 	public void update(GameContainer gc, int delta) {
 
-		if( x < 0 || x > gc.getWidth()-width)
-			xSpeed = -xSpeed;
-		
-		if(y < 0 || y > gc.getHeight() - height)
-			ySpeed = -ySpeed;
-		
-		x += xSpeed*delta/1000;
-		y += ySpeed*delta/1000;
-		
-		totalSpeed = (float)Math.sqrt(Math.pow(xSpeed, 2)+Math.pow(ySpeed, 2));
-		//System.out.println("Total Speed:"+totalSpeed);
+		x += Math.sin(direction)*speed*delta/1000;
+		y += Math.cos(direction)*-speed*delta/1000;
 	}
 
 	public void draw(GameContainer gc, Graphics g) {
@@ -92,29 +84,11 @@ public class Target extends Drawable{
 		this.height = height;
 	}
 
-	public float getxSpeed() {
-		return xSpeed;
-	}
-
-	public void setxSpeed(float xSpeed) {
-		this.xSpeed = xSpeed;
-	}
-
-	public float getySpeed() {
-		return ySpeed;
-	}
-
-	public void setySpeed(float ySpeed) {
-		this.ySpeed = ySpeed;
-	}
-
 	public float getCenterX(){
 		return x+width/2;
 	}
 	public float getCenterY(){
 		return y+height/2;
 	}
-	public float getTotalSpeed(){
-		return totalSpeed;
-	}
+
 }
