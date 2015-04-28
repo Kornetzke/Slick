@@ -18,8 +18,8 @@ public class Target {
 		this.width = width;
 		this.height = height;
 		
-		xSpeed = 50.0f;
-		ySpeed = 60.0f;
+		xSpeed = (float)(70.0f+Math.random()*30);
+		ySpeed = (float)(70.0f+Math.random()*30);
 
 	}
 
