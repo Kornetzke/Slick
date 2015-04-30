@@ -1,6 +1,5 @@
 package drawable;
 
-import java.awt.geom.Point2D;
 import java.awt.geom.Point2D.Float;
 
 import org.newdawn.slick.GameContainer;
