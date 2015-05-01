@@ -21,8 +21,8 @@ public class Projectile extends Movable{
 		this.y = y;
 		this.direction = direction;
 		this.speed = 500;
-		this.turnSpeed = 100;
-		this.maximumRange = 200000;
+		this.turnSpeed = 10;
+		this.maximumRange = 1000;
 		image = new Image("Resources/test.png");
 		width = image.getWidth();
 		height = image.getHeight();

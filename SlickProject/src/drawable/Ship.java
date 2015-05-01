@@ -30,9 +30,10 @@ public class Ship extends Movable {
 		width = image.getWidth();
 		height = image.getHeight();
 		
-		turnSpeed = 500;
+		turnSpeed = 50;
+		speed = 00;
 
-		weapon = new Weapon(x + 19, y + 81,(float)Math.sqrt(Math.pow(19,2)+Math.pow(81, 2)),direction, "hey", 5.0f);
+		weapon = new Weapon(this,-19,-81, "hey", 10.0f);
 		name = "ship";
 		health = 1;
 		sheilds = 1;
@@ -53,10 +54,13 @@ public class Ship extends Movable {
 		float mY = gc.getInput().getAbsoluteMouseY();
 
 		setTargetDirection(mX, mY);
+		//direction += Math.toRadians(turnSpeed)*delta/1000;
 
 		super.update(gc, delta);
-		System.out.println("ShipD: "+direction);
-		updatePosition(delta);
+		
+		//System.out.println("ShipD: "+direction);
+		
+		//updatePosition(delta);
 		updateFiring(gc, delta);
 
 	}
@@ -76,7 +80,7 @@ public class Ship extends Movable {
 	}
 	
 	protected Weapon addWeapon(){
-		Weapon tempWep = new Weapon(displacementX, displacementX, displacementX,direction, name, displacementX);
+		Weapon tempWep = new Weapon(this,displacementX, displacementX, name, displacementX);
 		return tempWep;
 		
 		
@@ -93,7 +97,7 @@ public class Ship extends Movable {
 
 		getCenter();
 		
-		weapon.update(gc, displacementX, displacementY,direction, delta, firing);
+		weapon.update(gc, delta, firing);
 	}
 
 }

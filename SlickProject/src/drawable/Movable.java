@@ -128,4 +128,20 @@ public abstract class Movable extends Drawable {
 
 	}
 
+	public float getDisplacementX() {
+		return displacementX;
+	}
+
+	public void setDisplacementX(float displacementX) {
+		this.displacementX = displacementX;
+	}
+
+	public float getDisplacementY() {
+		return displacementY;
+	}
+
+	public void setDisplacementY(float displacementY) {
+		this.displacementY = displacementY;
+	}
+
 }

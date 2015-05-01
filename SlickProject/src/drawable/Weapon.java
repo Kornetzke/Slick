@@ -3,6 +3,10 @@ package drawable;
 import hello.SimpleSlickGame;
 
 
+
+
+import java.awt.geom.Point2D;
+import java.awt.geom.Point2D.Float;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,35 +17,45 @@ import org.newdawn.slick.SlickException;
 public class Weapon {
 
 	String name;
-	float x, y, distanceFromCenterOfShip,direction;
+	float x, y,direction;
+	float offSetFromCenterOfShipX,offSetFromCenterOfShipY;
+	Ship ship;
 	float fireRate;
 	float fireCD;
 	ArrayList<Projectile> projectiles;
 
-	public Weapon(float x, float y,float distanceFromCenterOfShip,float direction, String name, float fireRate) {
-		this.x = x;
-		this.y = y;
-		this.direction = direction;
-		this.distanceFromCenterOfShip = distanceFromCenterOfShip;
+	public Weapon(Ship ship,float x, float y, String name, float fireRate) {
+		this.ship = ship;
+		this.x = ship.getX()+x;
+		this.y = ship.getY()+y;
+		this.offSetFromCenterOfShipX = this.x - ship.getCenter().x;
+		this.offSetFromCenterOfShipY = this.y - ship.getCenter().y;
+		this.direction = ship.getDirection();
 		this.name = name;
 		this.fireRate = fireRate;
 		this.fireCD = 1000 / fireRate;
 		projectiles = new ArrayList<Projectile>();
 	}
 
-	public void update(GameContainer gc, float displacementX,float displacementY,float shipDirection, int delta,
+	public void update(GameContainer gc, int delta,
 			boolean firing) {
 		// TODO Auto-generated method stub
 
-		this.direction = shipDirection;
+		this.direction = ship.getDirection();
+		float deg = (direction);
 		boolean canFire = canFire(delta);
+
 		
 		
-		System.out.println("wePD: "+direction);
+		float deltaX = (float)(Math.cos(deg)*offSetFromCenterOfShipX+Math.sin(deg)*offSetFromCenterOfShipY);
+		float deltaY = (float)(Math.cos(deg)*offSetFromCenterOfShipY-Math.sin(deg)*offSetFromCenterOfShipX);
 		
+		//System.out.println(String.format("cos(deg): %2.2f  sin(deg): %2.2f", Math.cos(deg),Math.sin(deg)));
 		
-		x += displacementX;
-		y += displacementY;
+		System.out.println(String.format("deg: %2.2f  offSetX: %2.2f  offSetY: %2.2f  offSetXAngle: %2.2f  offSetYAngle: %2.2f",deg, offSetFromCenterOfShipX,offSetFromCenterOfShipY,deltaX,deltaY));
+		
+		x = ship.getCenter().x+deltaX;
+		y = ship.getCenter().y+deltaY;
 		
 		
 
@@ -74,6 +88,7 @@ public class Weapon {
 		}
 
 	}
+
 
 	private boolean canFire(int delta) {
 

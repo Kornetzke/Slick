@@ -103,6 +103,8 @@ public class SimpleSlickGame extends BasicGame{
 		drawTime = gc.getTime() - time;
 		g.drawString("drawTime: "+drawTime, 5, 30);
 		g.drawString("updateTime: "+updateTime,5,50);
+		g.drawString(String.format("X:%2d", gc.getInput().getAbsoluteMouseX()), 5, 70);
+		g.drawString(String.format("Y:%2d", gc.getInput().getAbsoluteMouseY()), 5, 90);
 	}
 
 	public static void main(String[] args)
