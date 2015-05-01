@@ -5,8 +5,6 @@ import hello.SimpleSlickGame;
 
 
 
-import java.awt.geom.Point2D;
-import java.awt.geom.Point2D.Float;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -14,22 +12,25 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-public class Weapon {
+public class Weapon  {
 
 	String name;
-	float x, y,direction;
+	float xMiddle, yMiddle,direction;
 	float offSetFromCenterOfShipX,offSetFromCenterOfShipY;
 	Ship ship;
 	float fireRate;
 	float fireCD;
+	float coneOfFire;
+	
 	ArrayList<Projectile> projectiles;
 
 	public Weapon(Ship ship,float x, float y, String name, float fireRate) {
 		this.ship = ship;
-		this.x = ship.getX()+x;
-		this.y = ship.getY()+y;
-		this.offSetFromCenterOfShipX = this.x - ship.getCenter().x;
-		this.offSetFromCenterOfShipY = this.y - ship.getCenter().y;
+		this.xMiddle = ship.getX()+x;
+		this.yMiddle = ship.getY()+y;
+		this.offSetFromCenterOfShipX = this.xMiddle - ship.getCenter().x;
+		this.offSetFromCenterOfShipY = this.yMiddle - ship.getCenter().y;
+		this.coneOfFire = (float) Math.toRadians(15);
 		this.direction = ship.getDirection();
 		this.name = name;
 		this.fireRate = fireRate;
@@ -47,15 +48,15 @@ public class Weapon {
 
 		
 		
-		float deltaX = (float)(Math.cos(deg)*offSetFromCenterOfShipX+Math.sin(deg)*offSetFromCenterOfShipY);
-		float deltaY = (float)(Math.cos(deg)*offSetFromCenterOfShipY-Math.sin(deg)*offSetFromCenterOfShipX);
+		float deltaX = (float)(Math.cos(deg)*offSetFromCenterOfShipX-Math.sin(deg)*offSetFromCenterOfShipY);
+		float deltaY = (float)(Math.cos(deg)*offSetFromCenterOfShipY+Math.sin(deg)*offSetFromCenterOfShipX);
 		
 		//System.out.println(String.format("cos(deg): %2.2f  sin(deg): %2.2f", Math.cos(deg),Math.sin(deg)));
 		
-		System.out.println(String.format("deg: %2.2f  offSetX: %2.2f  offSetY: %2.2f  offSetXAngle: %2.2f  offSetYAngle: %2.2f",deg, offSetFromCenterOfShipX,offSetFromCenterOfShipY,deltaX,deltaY));
+		//System.out.println(String.format("deg: %2.2f  shipCenter: %2.2f %2.2f  offSetX: %2.2f  offSetY: %2.2f  offSetXAngle: %2.2f  offSetYAngle: %2.2f",deg,ship.getCenter().x,ship.getCenter().y, offSetFromCenterOfShipX,offSetFromCenterOfShipY,deltaX,deltaY));
 		
-		x = ship.getCenter().x+deltaX;
-		y = ship.getCenter().y+deltaY;
+		xMiddle = ship.getCenter().x+deltaX;
+		yMiddle = ship.getCenter().y+deltaY;
 		
 		
 
@@ -63,7 +64,8 @@ public class Weapon {
 
 		if (canFire && firing)
 			try {
-				projectiles.add(new Projectile(x, y, direction));
+				projectiles.add(new Projectile(xMiddle, yMiddle, direction+(float)(Math.random()*coneOfFire-coneOfFire/2)));
+				
 				fireCD = 1000 / fireRate;
 			} catch (SlickException e) {
 				// TODO Auto-generated catch block
@@ -80,6 +82,7 @@ public class Weapon {
 			Projectile p = projectilesIterator.next();
 			
 			p.setTargetDirection(SimpleSlickGame.target.getCenter());
+			System.out.println("target Direction "+SimpleSlickGame.target.getCenter());
 			p.update(gc, delta);
 			
 			if (p.getDistanceTraveled() > p.getMaximumRange()) {
@@ -101,6 +104,9 @@ public class Weapon {
 	}
 
 	public void draw(GameContainer gc, Graphics g) {
+		
+		
+		
 		for (Projectile p : projectiles) {
 			p.draw(gc, g);
 		}

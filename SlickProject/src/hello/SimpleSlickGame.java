@@ -93,7 +93,7 @@ public class SimpleSlickGame extends BasicGame{
 		
 		
 		g.rotate(x+width/2, y+height/2, deg);
-		g.drawImage(image, x, y);
+		//g.drawImage(image, x, y);
 		g.drawLine(x+width/2, y+height/2, x+width/2, -600);
 		g.rotate(x+width/2, y+height/2, -deg);
 		
@@ -115,7 +115,8 @@ public class SimpleSlickGame extends BasicGame{
 			appgc = new AppGameContainer(new SimpleSlickGame("Simple Slick Game"));
 			//appgc.setMultiSample(8);
 			//appgc.setTargetFrameRate(60);
-			appgc.setVSync(true);
+			//appgc.setVSync(true);
+			//appgc.setTargetFrameRate(120);
 			appgc.setDisplayMode(640, 480, false);
 			appgc.start();
 		}

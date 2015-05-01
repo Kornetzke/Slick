@@ -36,6 +36,7 @@ public class Target extends Drawable{
 		
 		totalSpeed = (float)Math.sqrt(Math.pow(xSpeed, 2)+Math.pow(ySpeed, 2));
 		//System.out.println("Total Speed:"+totalSpeed);
+		System.out.println("Target Direction: "+getCenter());
 	}
 
 	public void draw(GameContainer gc, Graphics g) {
@@ -45,6 +46,7 @@ public class Target extends Drawable{
 		g.setColor(Color.pink);
 		g.drawLine(x, y + height, x + width / 2, y);
 		g.drawLine(x + width / 2, y, x+width, y + height);
+		g.drawOval(getCenterX()-3, getCenterY()-3, 6, 6);
 		g.drawLine(x + width, y + height, x, y + height);
 		g.setColor(Color.red);
 		/*

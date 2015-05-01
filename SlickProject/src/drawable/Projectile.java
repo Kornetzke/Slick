@@ -20,10 +20,15 @@ public class Projectile extends Movable{
 		this.x = x;
 		this.y = y;
 		this.direction = direction;
-		this.speed = 500;
-		this.turnSpeed = 10;
-		this.maximumRange = 1000;
+		this.targetDirection = direction;
+		this.speed = 10;
+		this.turnSpeed = 500;
+		this.maximumRange = 10000000;
+
 		image = new Image("Resources/test.png");
+		
+			
+		
 		width = image.getWidth();
 		height = image.getHeight();
 	}
@@ -38,9 +43,10 @@ public class Projectile extends Movable{
 
 	public void draw(GameContainer gc, Graphics g){
 		
-		Point2D.Float middle = getCenter();
+		
 		
 		g.rotate(x,y, getDirectionInDegree());
+		g.drawLine(x, y, x, -600);
 		image.drawCentered(x, y);
 		g.rotate(x, y, -getDirectionInDegree());
 	}

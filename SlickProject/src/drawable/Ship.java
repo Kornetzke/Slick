@@ -2,10 +2,13 @@ package drawable;
 
 
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Point;
 
 public class Ship extends Movable {
 
@@ -14,7 +17,9 @@ public class Ship extends Movable {
 	int health;
 	int sheilds;
 	boolean firing;
-	Weapon weapon;
+	HitBox hitBox;
+	
+	ArrayList<Weapon> weapons;
 
 	public Ship() {
 		try {
@@ -31,9 +36,21 @@ public class Ship extends Movable {
 		height = image.getHeight();
 		
 		turnSpeed = 50;
-		speed = 00;
+		speed = 0;
 
-		weapon = new Weapon(this,19,81, "hey", 10.0f);
+		weapons = new ArrayList<Weapon>();
+		//weapons.add(new Weapon(this,19,81, "hey", 100.0f));
+		weapons.add(new Weapon(this,105,81, "hey", 1.0f));
+		//weapons.add(new Weapon(this,62,15, "hey", 100.0f));
+		
+		hitBox = new HitBox();
+		hitBox.addPoint(new Point(0,0));
+		hitBox.addPoint(new Point(10,0));
+		hitBox.addPoint(new Point(10,10));
+		hitBox.addPoint(new Point(0,10));
+		hitBox.buildHitBox();
+		
+		
 		name = "ship";
 		health = 1;
 		sheilds = 1;
@@ -58,6 +75,8 @@ public class Ship extends Movable {
 
 		super.update(gc, delta);
 		
+		hitBox.update(this);
+		
 		//System.out.println("ShipD: "+direction);
 		
 		//updatePosition(delta);
@@ -69,13 +88,17 @@ public class Ship extends Movable {
 	public void draw(GameContainer gc, Graphics g) {
 		// TODO Auto-generated method stub
 
-		weapon.draw(gc, g);
+		for(Weapon wep : weapons){
+			wep.draw(gc,g);
+		}
 
 		g.rotate(x + width / 2, y + height / 2,
 				(float) Math.toDegrees(direction));
-		g.drawImage(image, x, y);
+		//g.drawImage(image, x, y);
 		g.rotate(x + width / 2, y + height / 2,
 				(float) Math.toDegrees(-direction));
+		
+		hitBox.draw(gc, g);
 
 	}
 	
@@ -95,9 +118,10 @@ public class Ship extends Movable {
 
 	private void updateFiring(GameContainer gc, int delta) {
 
-		getCenter();
+		for(Weapon wep : weapons){
+			wep.update(gc, delta, firing);
+		}
 		
-		weapon.update(gc, delta, firing);
 	}
 
 }

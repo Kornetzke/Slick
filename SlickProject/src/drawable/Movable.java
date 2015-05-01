@@ -71,6 +71,8 @@ public abstract class Movable extends Drawable {
 				middle.y - targetPoint.y);
 		targetDirection = (float) ((targetDirection < 0) ? targetDirection
 				+ Math.PI * 2 : targetDirection);
+		
+		//System.out.println("TargetDirection: "+targetDirection);
 	}
 
 	public void setTargetDirection(float x, float y) {
