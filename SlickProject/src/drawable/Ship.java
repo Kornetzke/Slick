@@ -33,7 +33,7 @@ public class Ship extends Movable {
 		turnSpeed = 50;
 		speed = 00;
 
-		weapon = new Weapon(this,-19,-81, "hey", 10.0f);
+		weapon = new Weapon(this,19,81, "hey", 10.0f);
 		name = "ship";
 		health = 1;
 		sheilds = 1;
