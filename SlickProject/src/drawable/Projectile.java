@@ -2,6 +2,7 @@ package drawable;
 
 import java.awt.geom.Point2D;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -47,7 +48,9 @@ public class Projectile extends Movable{
 		
 		g.rotate(x,y, getDirectionInDegree());
 		g.drawLine(x, y, x, -600);
+		g.setColor(Color.white);
 		image.drawCentered(x, y);
+		g.drawOval(x-3, y-3, 6, 6);
 		g.rotate(x, y, -getDirectionInDegree());
 	}
 

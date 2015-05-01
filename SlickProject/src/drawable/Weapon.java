@@ -81,7 +81,9 @@ public class Weapon  {
 		while (projectilesIterator.hasNext()) {
 			Projectile p = projectilesIterator.next();
 			
-			p.setTargetDirection(SimpleSlickGame.target.getCenter());
+		//	p.setTargetDirection(SimpleSlickGame.target.getCenter());
+			p.setTargetDirection(gc.getInput().getAbsoluteMouseX(),gc.getInput().getAbsoluteMouseY());
+			
 			System.out.println("target Direction "+SimpleSlickGame.target.getCenter());
 			p.update(gc, delta);
 			

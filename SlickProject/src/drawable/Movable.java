@@ -67,8 +67,12 @@ public abstract class Movable extends Drawable {
 
 	public void setTargetDirection(Point2D.Float targetPoint) {
 		Point2D.Float middle = this.getCenter();
+		
+		
 		targetDirection = (float) -Math.atan2(middle.x - targetPoint.x,
 				middle.y - targetPoint.y);
+		
+		
 		targetDirection = (float) ((targetDirection < 0) ? targetDirection
 				+ Math.PI * 2 : targetDirection);
 		
