@@ -7,6 +7,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Point;
 
 public class Projectile extends Movable{
 	
@@ -16,42 +17,60 @@ public class Projectile extends Movable{
 	private float maximumRange;
 	private float distanceTraveled;
 	private float damage;
+	private HitBox hitBox;
+	private boolean hitSomething;
+	private Movable target;
 	
 	public Projectile(float x, float y,float direction) throws SlickException{
-		this.x = x;
-		this.y = y;
-		this.direction = direction;
-		this.targetDirection = direction;
-		this.speed = 10;
-		this.turnSpeed = 500;
-		this.maximumRange = 10000000;
-
 		image = new Image("Resources/test.png");
-		
-			
 		
 		width = image.getWidth();
 		height = image.getHeight();
+		
+		this.x = x-width/2;
+		this.y = y-height/2;
+		this.direction = direction;
+		this.targetDirection = direction;
+		this.speed = 100;
+		this.turnSpeed = 70;
+		this.maximumRange = 10000000;
+
+		hitBox = new HitBox();
+		hitBox.addPoint(new Point(x,y));
+		hitBox.addPoint(new Point(x,y+height));
+		hitBox.addPoint(new Point(x+width,y+height));
+		hitBox.addPoint(new Point(x+width,y));
+		hitBox.direction = direction;
+		hitBox.buildHitBox();
+		
+		hitSomething = false;
+		
+	}
+	
+	public void setTarget(Movable target){
+		this.target = target;
 	}
 	
 	public void update(GameContainer gc, int delta){
 		
-		super.update(gc, delta);
+		this.setTargetDirection(target.getCenter());
 		
+		super.update(gc, delta);
+		hitBox.update(this);
 		distanceTraveled += Math.sqrt(Math.pow(displacementX, 2)+Math.pow(displacementY, 2));
 	}
 	
 
 	public void draw(GameContainer gc, Graphics g){
 		
+		Point2D.Float middle = getCenter();
 		
-		
-		g.rotate(x,y, getDirectionInDegree());
-		g.drawLine(x, y, x, -600);
+		g.rotate(middle.x,middle.y, getDirectionInDegree());
 		g.setColor(Color.white);
-		image.drawCentered(x, y);
-		g.drawOval(x-3, y-3, 6, 6);
-		g.rotate(x, y, -getDirectionInDegree());
+		g.drawImage(image, x, y);
+		g.drawOval(middle.x-3, middle.y-3, 6, 6);
+		g.rotate(middle.x, middle.y, -getDirectionInDegree());
+		hitBox.draw(gc, g);
 	}
 
 	public String getName() {
@@ -93,5 +112,19 @@ public class Projectile extends Movable{
 	public void setDamage(float damage) {
 		this.damage = damage;
 	}
+	
+	public HitBox getHitBox(){
+		return hitBox;
+	}
+
+	public boolean isHitSomething() {
+		return hitSomething;
+	}
+
+	public void setHitSomething(boolean hitSomething) {
+		this.hitSomething = hitSomething;
+	}
+	
+	
 
 }

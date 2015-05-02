@@ -78,12 +78,28 @@ public abstract class Movable extends Drawable {
 		
 		//System.out.println("TargetDirection: "+targetDirection);
 	}
+	
+	public void setDirection(Point2D.Float targetPoint) {
+		Point2D.Float middle = this.getCenter();
+		
+		
+		direction = (float) -Math.atan2(middle.x - targetPoint.x,
+				middle.y - targetPoint.y);
+		
+		
+		direction = (float) ((direction < 0) ? direction
+				+ Math.PI * 2 : direction);
+		
+	}
 
 	public void setTargetDirection(float x, float y) {
 		Point2D.Float middle = this.getCenter();
+		
 		targetDirection = (float) -Math.atan2(middle.x - x, middle.y - y);
 		targetDirection = (float) ((targetDirection < 0) ? targetDirection
 				+ Math.PI * 2 : targetDirection);
+		
+		
 	}
 
 	public float getTurnSpeed() {

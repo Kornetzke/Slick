@@ -2,7 +2,9 @@ package drawable;
 
 
 
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -36,18 +38,20 @@ public class Ship extends Movable {
 		height = image.getHeight();
 		
 		turnSpeed = 50;
-		speed = 0;
+		speed = 10;
 
 		weapons = new ArrayList<Weapon>();
-		//weapons.add(new Weapon(this,19,81, "hey", 100.0f));
-		weapons.add(new Weapon(this,105,81, "hey", 1.0f));
-		//weapons.add(new Weapon(this,62,15, "hey", 100.0f));
+		weapons.add(new Weapon(this,19,81, "hey", 100.0f));
+		weapons.add(new Weapon(this,105,81, "hey", 100.0f));
+		weapons.add(new Weapon(this,62,15, "hey", 100.0f));
+		
+		Point2D.Float middle = getCenter();
 		
 		hitBox = new HitBox();
-		hitBox.addPoint(new Point(0,0));
-		hitBox.addPoint(new Point(10,0));
-		hitBox.addPoint(new Point(10,10));
-		hitBox.addPoint(new Point(0,10));
+		hitBox.addPoint(new Point(middle.x-10,middle.y-10));
+		hitBox.addPoint(new Point(middle.x+10,middle.y-10));
+		hitBox.addPoint(new Point(middle.x+10,middle.y+10));
+		hitBox.addPoint(new Point(middle.x-10,middle.y+10));
 		hitBox.buildHitBox();
 		
 		
@@ -92,10 +96,10 @@ public class Ship extends Movable {
 			wep.draw(gc,g);
 		}
 
-		g.rotate(x + width / 2, y + height / 2,
+		g.rotate(getCenter().x,getCenter().y,
 				(float) Math.toDegrees(direction));
-		//g.drawImage(image, x, y);
-		g.rotate(x + width / 2, y + height / 2,
+		g.drawImage(image, x, y);
+		g.rotate(getCenter().x, getCenter().y,
 				(float) Math.toDegrees(-direction));
 		
 		hitBox.draw(gc, g);
@@ -109,12 +113,6 @@ public class Ship extends Movable {
 		
 	}
 
-	private void updatePosition(int delta) {
-
-		x += (float) Math.sin(direction) * speed * delta / 1000;
-		y += (float) Math.cos(direction) * -speed * delta / 1000;
-
-	}
 
 	private void updateFiring(GameContainer gc, int delta) {
 
@@ -122,6 +120,16 @@ public class Ship extends Movable {
 			wep.update(gc, delta, firing);
 		}
 		
+	}
+	
+	public ArrayList<Projectile> getProjectiles(){
+		ArrayList<Projectile> projectiles = new ArrayList<Projectile>();
+		
+		for(Weapon w : weapons){
+			projectiles.addAll(w.getProjectiles());
+		}
+		
+		return projectiles;
 	}
 
 }

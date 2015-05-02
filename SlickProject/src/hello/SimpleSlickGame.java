@@ -21,8 +21,8 @@ public class SimpleSlickGame extends BasicGame{
 	float oldX = x,oldY = y;
 	float movementSpeed = 0,turnSpeed = 25;
 	Image image;
-	public static Target target;
-	Ship testShip;
+	public static Target[] target;
+	public static Ship testShip;
 	
 	long updateTime=0,drawTime=0;
 	
@@ -39,9 +39,10 @@ public class SimpleSlickGame extends BasicGame{
 		//x = gc.getWidth()/2-image.getWidth()/2;
 		//y = gc.getHeight()/2-image.getHeight()/2;
 		
-		
-		
-		target = new Target(20,20,50,50);
+		target = new Target[10];
+		for(int x = 0;x< 10;x++ ){
+			target[x] = new Target((float)Math.random()*20,(float)Math.random()*20,50,50);
+		}
 		
 		testShip = new Ship();
 		
@@ -53,34 +54,13 @@ public class SimpleSlickGame extends BasicGame{
 		
 		long time = gc.getTime();
 		
-		float mouseX = gc.getInput().getAbsoluteMouseX();
-		float mouseY = gc.getInput().getAbsoluteMouseY();	
 
-		target.update(gc, delta);
-		
-		testShip.update(gc, delta);
-		
-		mouseX = target.getCenterX();
-		mouseY = target.getCenterY();
+		for(Target t : target){
 			
-		
-		double angle = -Math.atan2( x+width/2 - mouseX, y+height/2 - mouseY);
-		
-		if(angle < 0){
-			angle += Math.PI*2;
+			t.update(gc, delta);
 		}
 		
-		deg = (float) Math.toDegrees(angle);
-		//deg += turnSpeed*delta/1000;
-			
-		//System.out.println(String.format("Angle: %2.3f  Degrees: %2.3f  Olddeg: %2.3f  OldAngle: %2.3f", angle,deg,oldDeg,oldAngle));
-		
-		
-		
-		x += Math.sin(angle)*movementSpeed*delta/1000;
-		y += Math.cos(angle)*-movementSpeed*delta/1000;
-		
-		//System.out.println(String.format("X: %2.3f  Y: %2.3f  OldX: %2.3f  OldY: %2.3f", x,y,oldX,oldY));
+		testShip.update(gc, delta);
 		
 		updateTime = gc.getTime() - time;
 	}
@@ -97,7 +77,10 @@ public class SimpleSlickGame extends BasicGame{
 		g.drawLine(x+width/2, y+height/2, x+width/2, -600);
 		g.rotate(x+width/2, y+height/2, -deg);
 		
-		target.draw(gc, g);
+		for(Target t : target){
+			
+			t.draw(gc, g);
+		}
 		testShip.draw(gc, g);
 		
 		drawTime = gc.getTime() - time;
@@ -115,9 +98,10 @@ public class SimpleSlickGame extends BasicGame{
 			appgc = new AppGameContainer(new SimpleSlickGame("Simple Slick Game"));
 			//appgc.setMultiSample(8);
 			//appgc.setTargetFrameRate(60);
-			//appgc.setVSync(true);
+			appgc.setVSync(true);
 			//appgc.setTargetFrameRate(120);
-			appgc.setDisplayMode(640, 480, false);
+			//appgc.setDisplayMode(640, 480, false);
+			appgc.setDisplayMode(1920, 1080, true);
 			appgc.start();
 		}
 		catch (SlickException ex)

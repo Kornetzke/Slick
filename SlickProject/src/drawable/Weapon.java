@@ -5,6 +5,8 @@ import hello.SimpleSlickGame;
 
 
 
+
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -64,7 +66,14 @@ public class Weapon  {
 
 		if (canFire && firing)
 			try {
-				projectiles.add(new Projectile(xMiddle, yMiddle, direction+(float)(Math.random()*coneOfFire-coneOfFire/2)));
+				
+				int index = (int)(Math.random()*10);
+				
+				
+				Projectile p = new Projectile(xMiddle, yMiddle, direction+(float)(Math.random()*coneOfFire-coneOfFire/2));
+				p.setTarget(SimpleSlickGame.target[index]);
+				
+				projectiles.add(p);
 				
 				fireCD = 1000 / fireRate;
 			} catch (SlickException e) {
@@ -81,13 +90,13 @@ public class Weapon  {
 		while (projectilesIterator.hasNext()) {
 			Projectile p = projectilesIterator.next();
 			
-		//	p.setTargetDirection(SimpleSlickGame.target.getCenter());
-			p.setTargetDirection(gc.getInput().getAbsoluteMouseX(),gc.getInput().getAbsoluteMouseY());
+			int index = (int)(Math.random()*10);
 			
-			System.out.println("target Direction "+SimpleSlickGame.target.getCenter());
+			p.setTargetDirection(SimpleSlickGame.target[index].getCenter());
+			
 			p.update(gc, delta);
 			
-			if (p.getDistanceTraveled() > p.getMaximumRange()) {
+			if (p.getDistanceTraveled() > p.getMaximumRange() || p.isHitSomething()) {
 				projectilesIterator.remove();
 			}
 		}
@@ -112,6 +121,10 @@ public class Weapon  {
 		for (Projectile p : projectiles) {
 			p.draw(gc, g);
 		}
+	}
+	
+	public ArrayList<Projectile> getProjectiles(){
+		return projectiles;
 	}
 
 }

@@ -1,12 +1,16 @@
 package drawable;
 
+import hello.SimpleSlickGame;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.geom.Point;
 
-public class Target extends Drawable{
+public class Target extends Movable{
 
 	float xSpeed,ySpeed,totalSpeed;
+	HitBox hitBox;
 
 	public Target() {
 		x = y = width = height = 0;
@@ -17,6 +21,13 @@ public class Target extends Drawable{
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		
+		
+		hitBox = new HitBox();
+		hitBox.addPoint(new Point(x+width/2,y));
+		hitBox.addPoint(new Point(x,y+height));
+		hitBox.addPoint(new Point(x+width,y+height));
+		hitBox.buildHitBox();
 		
 		xSpeed = (float)(70.0f+Math.random()*30);
 		ySpeed = (float)(70.0f+Math.random()*30);
@@ -35,8 +46,17 @@ public class Target extends Drawable{
 		y += ySpeed*delta/1000;
 		
 		totalSpeed = (float)Math.sqrt(Math.pow(xSpeed, 2)+Math.pow(ySpeed, 2));
+		
+		hitBox.update(this);
+		
+		for(Projectile p : SimpleSlickGame.testShip.getProjectiles()){
+			if(hitBox.checkIfIntersects(p.getHitBox())){
+				p.setHitSomething(true);
+				System.out.println("Hit");
+			}
+		}
 		//System.out.println("Total Speed:"+totalSpeed);
-		System.out.println("Target Direction: "+getCenter());
+		//System.out.println("Target Direction: "+getCenter());
 	}
 
 	public void draw(GameContainer gc, Graphics g) {
@@ -44,22 +64,11 @@ public class Target extends Drawable{
 		//g.setAntiAlias(true);
 		g.setLineWidth(2.0f);
 		g.setColor(Color.pink);
-		g.drawLine(x, y + height, x + width / 2, y);
-		g.drawLine(x + width / 2, y, x+width, y + height);
+		g.drawOval(x, y, width, height);
 		g.drawOval(getCenterX()-3, getCenterY()-3, 6, 6);
-		g.drawLine(x + width, y + height, x, y + height);
-		g.setColor(Color.red);
-		/*
-		g.drawRect(x+width/2-2, y+height/2-2, 4, 4);
-		g.drawRect(x+width-2, y+height/2-2, 4, 4);
-		g.drawRect(x+width-2, y+height-2, 4, 4);
-		g.drawRect(x+width/2-2, y+height-2, 4, 4);
-		g.drawRect(x-2, y+height-2, 4, 4);
-		g.drawRect(x+width-2, y-2, 4, 4);
-		g.drawRect(x+width/2-2, y-2, 4, 4);
-		g.drawRect(x-2, y+height/2-2, 4, 4);
-		g.drawRect(x-2, y-2, 4, 4);
-*/
+		
+		hitBox.draw(gc, g);
+
 	}
 
 	public float getX() {

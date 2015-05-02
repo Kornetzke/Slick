@@ -40,25 +40,37 @@ public class HitBox {
 		for(Point p : points){
 			hitBox.addPoint(p.getX(), p.getY());
 		}
+		hitBox = (Polygon) hitBox.transform(Transform.createRotateTransform(direction,hitBox.getCenterX(),hitBox.getCenterY()));
 	}
 	
 	public void update(Movable obj){
-		float deg = obj.getDirectionInDegree();
+		float deg = obj.getDirection();
 		Point2D.Float center = obj.getCenter();
+		float rotateOffSet = deg - direction;
+		direction = deg;
 		
-		Transform transform = new Transform();
-		transform = Transform.createRotateTransform(deg, (float)center.getX()-hitBox.getCenterX(),(float) center.getY()-hitBox.getCenterX());
+		float deltaX = hitBox.getCenterX() - center.x;
+		float deltaY = hitBox.getCenterY() - center.y;
 		
-		//hitBox = (Polygon) hitBox.transform(transform);
+		//System.out.println(String.format("HBX: %3.2f  HBY: %3.2f  OBJX: %3.2f  OBJY: %3.2f", hitBox.getCenterX(),hitBox.getCenterY(),obj.getCenter().x,obj.getCenter().y));
+		
+		
+		hitBox = (Polygon) hitBox.transform(Transform.createRotateTransform(rotateOffSet,center.x,center.y));
+		hitBox = (Polygon) hitBox.transform(Transform.createTranslateTransform(-deltaX, -deltaY));
+
+	}
+	
+	public boolean checkIfIntersects(HitBox otherHitBox){
+		return hitBox.intersects(otherHitBox.hitBox);
 	}
 	
 	
 	public void draw(GameContainer gc, Graphics g) {
-		
-		g.rotate(hitBox.getCenterX(), hitBox.getCenterY(), (float)Math.toDegrees(direction));
-		g.setColor(Color.white);
+		/*
+		g.setAntiAlias(true);
+		g.setColor(Color.orange);
 		g.draw(hitBox);
-		g.rotate(hitBox.getCenterX(), hitBox.getCenterY(),(float)-Math.toDegrees(direction));
+		*/
 		
 		
 		
