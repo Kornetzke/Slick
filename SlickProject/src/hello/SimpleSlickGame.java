@@ -36,12 +36,12 @@ public class SimpleSlickGame extends BasicGame{
 		gc.setAlwaysRender(true);
 		gc.setMultiSample(0);
 		image = new Image("Resources/Fighter150W.png");
-		//x = gc.getWidth()/2-image.getWidth()/2;
-		//y = gc.getHeight()/2-image.getHeight()/2;
 		
-		target = new Target[10];
-		for(int x = 0;x< 10;x++ ){
-			target[x] = new Target((float)Math.random()*20,(float)Math.random()*20,50,50);
+		target = new Target[2];
+		
+		
+		for(int x = 0;x< target.length;x++ ){
+			target[x] = new Target((float)Math.random()*20,(float)Math.random()*20,25,25);
 		}
 		
 		testShip = new Ship();
@@ -61,6 +61,7 @@ public class SimpleSlickGame extends BasicGame{
 		}
 		
 		testShip.update(gc, delta);
+		System.out.println(testShip.getDirection());
 		
 		updateTime = gc.getTime() - time;
 	}
@@ -100,8 +101,8 @@ public class SimpleSlickGame extends BasicGame{
 			//appgc.setTargetFrameRate(60);
 			appgc.setVSync(true);
 			//appgc.setTargetFrameRate(120);
-			//appgc.setDisplayMode(640, 480, false);
-			appgc.setDisplayMode(1920, 1080, true);
+			appgc.setDisplayMode(640, 480, false);
+			//appgc.setDisplayMode(1920, 1080, true);
 			appgc.start();
 		}
 		catch (SlickException ex)

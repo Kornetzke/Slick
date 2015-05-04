@@ -23,6 +23,7 @@ public class Weapon  {
 	float fireRate;
 	float fireCD;
 	float coneOfFire;
+	Movable target;
 	
 	ArrayList<Projectile> projectiles;
 
@@ -67,7 +68,8 @@ public class Weapon  {
 		if (canFire && firing)
 			try {
 				
-				int index = (int)(Math.random()*10);
+				int index = (int) Math.round((Math.random()*(SimpleSlickGame.target.length-1)));
+				System.out.println("Index: "+index);
 				
 				
 				Projectile p = new Projectile(xMiddle, yMiddle, direction+(float)(Math.random()*coneOfFire-coneOfFire/2));
@@ -90,7 +92,7 @@ public class Weapon  {
 		while (projectilesIterator.hasNext()) {
 			Projectile p = projectilesIterator.next();
 			
-			int index = (int)(Math.random()*10);
+			int index = (int)(Math.random()*SimpleSlickGame.target.length-1);
 			
 			p.setTargetDirection(SimpleSlickGame.target[index].getCenter());
 			
@@ -125,6 +127,14 @@ public class Weapon  {
 	
 	public ArrayList<Projectile> getProjectiles(){
 		return projectiles;
+	}
+	
+	public Movable getTarget(){
+		return target;
+	}
+	
+	public void setTarget(Movable m){
+		target = m;
 	}
 
 }

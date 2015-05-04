@@ -9,7 +9,7 @@ import org.newdawn.slick.geom.Point;
 
 public class Target extends Movable{
 
-	float xSpeed,ySpeed,totalSpeed;
+
 	HitBox hitBox;
 
 	public Target() {
@@ -29,23 +29,17 @@ public class Target extends Movable{
 		hitBox.addPoint(new Point(x+width,y+height));
 		hitBox.buildHitBox();
 		
-		xSpeed = (float)(70.0f+Math.random()*30);
-		ySpeed = (float)(70.0f+Math.random()*30);
+		speed = (float)(70.0f+Math.random()*30);
 
 	}
 
 	public void update(GameContainer gc, int delta) {
 
-		if( x < 0 || x > gc.getWidth()-width)
-			xSpeed = -xSpeed;
 		
-		if(y < 0 || y > gc.getHeight() - height)
-			ySpeed = -ySpeed;
+		super.update(gc, delta);
 		
-		x += xSpeed*delta/1000;
-		y += ySpeed*delta/1000;
-		
-		totalSpeed = (float)Math.sqrt(Math.pow(xSpeed, 2)+Math.pow(ySpeed, 2));
+		bounce(gc);
+
 		
 		hitBox.update(this);
 		
@@ -55,6 +49,7 @@ public class Target extends Movable{
 				System.out.println("Hit");
 			}
 		}
+		System.out.println("direction: "+direction);
 		//System.out.println("Total Speed:"+totalSpeed);
 		//System.out.println("Target Direction: "+getCenter());
 	}
@@ -69,6 +64,24 @@ public class Target extends Movable{
 		
 		hitBox.draw(gc, g);
 
+	}
+	
+	public void bounce(GameContainer gc){
+		if( x < 0 ){
+			direction = reflectYaxis(direction);
+			x = 0;
+		} else if ( x > gc.getWidth()-width ){
+			direction = reflectYaxis(direction);
+			x = gc.getWidth()-width;
+		}
+		
+		if(y < 0){
+			direction =  reflectXaxis(direction);
+			y = 0;
+		}else if( y > gc.getHeight() - height){
+			direction = reflectXaxis(direction);
+			y = gc.getHeight() - height;
+		}
 	}
 
 	public float getX() {
@@ -103,29 +116,20 @@ public class Target extends Movable{
 		this.height = height;
 	}
 
-	public float getxSpeed() {
-		return xSpeed;
-	}
-
-	public void setxSpeed(float xSpeed) {
-		this.xSpeed = xSpeed;
-	}
-
-	public float getySpeed() {
-		return ySpeed;
-	}
-
-	public void setySpeed(float ySpeed) {
-		this.ySpeed = ySpeed;
-	}
-
 	public float getCenterX(){
 		return x+width/2;
 	}
 	public float getCenterY(){
 		return y+height/2;
 	}
-	public float getTotalSpeed(){
-		return totalSpeed;
+	
+	
+	public float reflectYaxis(float dir){
+		return (float) (Math.PI*4 - direction);
 	}
+	
+	public float reflectXaxis(float dir){
+		return (float) (Math.PI*.5 - direction);
+	}
+
 }

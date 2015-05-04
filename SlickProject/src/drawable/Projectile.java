@@ -31,9 +31,9 @@ public class Projectile extends Movable{
 		this.y = y-height/2;
 		this.direction = direction;
 		this.targetDirection = direction;
-		this.speed = 100;
-		this.turnSpeed = 70;
-		this.maximumRange = 10000000;
+		this.speed = 500;
+		this.turnSpeed = 10;
+		this.maximumRange = 1000;
 
 		hitBox = new HitBox();
 		hitBox.addPoint(new Point(x,y));

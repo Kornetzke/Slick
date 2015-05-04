@@ -25,8 +25,7 @@ public abstract class Movable extends Drawable {
 		updateDirection(delta);
 
 		x += displacementX = (float) Math.sin(direction) * speed * delta / 1000;
-		y += displacementY = (float) Math.cos(direction) * -speed * delta
-				/ 1000;
+		y += displacementY = (float) Math.cos(direction) * -speed * delta/ 1000;
 	}
 
 	public void draw(GameContainer gc, Graphics g) {

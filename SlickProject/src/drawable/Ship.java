@@ -2,6 +2,8 @@ package drawable;
 
 
 
+import hello.SimpleSlickGame;
+
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,6 +22,8 @@ public class Ship extends Movable {
 	int sheilds;
 	boolean firing;
 	HitBox hitBox;
+	boolean followTarget;
+	Movable target;
 	
 	ArrayList<Weapon> weapons;
 
@@ -37,13 +41,17 @@ public class Ship extends Movable {
 		width = image.getWidth();
 		height = image.getHeight();
 		
-		turnSpeed = 50;
-		speed = 10;
+		followTarget = false;
+		
+		target = SimpleSlickGame.target[0];
+		
+		turnSpeed = 70;
+		speed = 0;
 
 		weapons = new ArrayList<Weapon>();
-		weapons.add(new Weapon(this,19,81, "hey", 100.0f));
-		weapons.add(new Weapon(this,105,81, "hey", 100.0f));
-		weapons.add(new Weapon(this,62,15, "hey", 100.0f));
+		//weapons.add(new Weapon(this,19,81, "hey", 100.0f));
+		//weapons.add(new Weapon(this,105,81, "hey", 100.0f));
+		weapons.add(new Weapon(this,62,15, "hey", 1.0f));
 		
 		Point2D.Float middle = getCenter();
 		
@@ -66,6 +74,10 @@ public class Ship extends Movable {
 	public void update(GameContainer gc, int delta) {
 		// TODO Auto-generated method stub
 
+		if(gc.getInput().isMousePressed(1)){
+			followTarget = !followTarget;
+		}
+		
 		if (gc.getInput().isMouseButtonDown(0))
 			firing = true;
 		else
@@ -75,6 +87,11 @@ public class Ship extends Movable {
 		float mY = gc.getInput().getAbsoluteMouseY();
 
 		setTargetDirection(mX, mY);
+		
+		if(followTarget){
+		setTargetDirection(target.getCenter());
+		}
+		
 		//direction += Math.toRadians(turnSpeed)*delta/1000;
 
 		super.update(gc, delta);
@@ -117,7 +134,7 @@ public class Ship extends Movable {
 	private void updateFiring(GameContainer gc, int delta) {
 
 		for(Weapon wep : weapons){
-			wep.update(gc, delta, firing);
+			wep.update(gc, delta, firing||followTarget);
 		}
 		
 	}
