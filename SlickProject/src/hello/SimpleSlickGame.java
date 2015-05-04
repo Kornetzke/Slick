@@ -37,11 +37,11 @@ public class SimpleSlickGame extends BasicGame{
 		gc.setMultiSample(0);
 		image = new Image("Resources/Fighter150W.png");
 		
-		target = new Target[2];
+		target = new Target[5];
 		
 		
 		for(int x = 0;x< target.length;x++ ){
-			target[x] = new Target((float)Math.random()*20,(float)Math.random()*20,25,25);
+			target[x] = new Target(200,200,25,25);
 		}
 		
 		testShip = new Ship();
@@ -99,7 +99,7 @@ public class SimpleSlickGame extends BasicGame{
 			appgc = new AppGameContainer(new SimpleSlickGame("Simple Slick Game"));
 			//appgc.setMultiSample(8);
 			//appgc.setTargetFrameRate(60);
-			appgc.setVSync(true);
+			//appgc.setVSync(true);
 			//appgc.setTargetFrameRate(120);
 			appgc.setDisplayMode(640, 480, false);
 			//appgc.setDisplayMode(1920, 1080, true);

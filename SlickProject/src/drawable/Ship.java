@@ -45,7 +45,7 @@ public class Ship extends Movable {
 		
 		target = SimpleSlickGame.target[0];
 		
-		turnSpeed = 70;
+		turnSpeed = 200;
 		speed = 0;
 
 		weapons = new ArrayList<Weapon>();

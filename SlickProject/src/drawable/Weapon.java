@@ -33,7 +33,7 @@ public class Weapon  {
 		this.yMiddle = ship.getY()+y;
 		this.offSetFromCenterOfShipX = this.xMiddle - ship.getCenter().x;
 		this.offSetFromCenterOfShipY = this.yMiddle - ship.getCenter().y;
-		this.coneOfFire = (float) Math.toRadians(15);
+		this.coneOfFire = (float) Math.toRadians(0);
 		this.direction = ship.getDirection();
 		this.name = name;
 		this.fireRate = fireRate;
