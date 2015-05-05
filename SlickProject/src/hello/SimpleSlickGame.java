@@ -1,28 +1,28 @@
 package hello;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
-
-
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import drawable.Background;
+import drawable.Movable;
 import drawable.Ship;
 import drawable.Target;
 
 public class SimpleSlickGame extends BasicGame{
-	float x = 100,y = 200,deg = 0,width=125,height=138;
-	
-	float oldX = x,oldY = y;
-	float movementSpeed = 0,turnSpeed = 25;
-	Image image;
+
 	public static Target[] target;
 	public static Ship testShip;
+	public static Background background;
+	
+	
+	
+	
+	Movable focus;
 	
 	long updateTime=0,drawTime=0;
 	
@@ -33,24 +33,33 @@ public class SimpleSlickGame extends BasicGame{
 
 	@Override
 	public void init(GameContainer gc) throws SlickException {
-		gc.setAlwaysRender(true);
-		gc.setMultiSample(0);
-		image = new Image("Resources/Fighter150W.png");
 		
-		target = new Target[500];
+		
+		target = new Target[5];
 		
 		
 		for(int x = 0;x< target.length;x++ ){
-			target[x] = new Target(326,326,24,24);
+			target[x] = new Target(gc.getWidth()/2,gc.getHeight()/2,24,24);
 		}
 		
 		testShip = new Ship();
+		
+		background = new Background();
+		
+		focus = testShip;
 		
 		
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException {
+		
+		gc.getInput();
+		if(gc.getInput().isKeyPressed(Input.KEY_RBRACKET)){
+		focus = target[0];
+		}else if(gc.getInput().isKeyPressed(Input.KEY_LBRACKET)){
+			focus = testShip;
+		}
 		
 		long time = gc.getTime();
 		
@@ -61,7 +70,7 @@ public class SimpleSlickGame extends BasicGame{
 		}
 		
 		testShip.update(gc, delta);
-		System.out.println(testShip.getDirection());
+		//System.out.println(testShip.getDirection());
 		
 		updateTime = gc.getTime() - time;
 	}
@@ -72,23 +81,28 @@ public class SimpleSlickGame extends BasicGame{
 		
 		long time = gc.getTime();
 		
-		/*
-		g.rotate(x+width/2, y+height/2, deg);
-		//g.drawImage(image, x, y);
-		g.drawLine(x+width/2, y+height/2, x+width/2, -600);
-		g.rotate(x+width/2, y+height/2, -deg);
-		*/
+		
+		
+		
+		float xOffset = gc.getWidth()/2 - focus.getCenter().x;
+		float yOffset = gc.getHeight()/2 - focus.getCenter().y;
+		
+		
+		g.translate(xOffset,yOffset);	
+		background.draw(gc, g);
+		
 		for(Target t : target){
 			
 			t.draw(gc, g);
 		}
-		//testShip.draw(gc, g);
+		testShip.draw(gc, g);
 		
+		g.translate(-xOffset, -yOffset);
+	
 		drawTime = gc.getTime() - time;
 		g.drawString("drawTime: "+drawTime, 5, 30);
 		g.drawString("updateTime: "+updateTime,5,50);
-		g.drawString(String.format("X:%2d", gc.getInput().getAbsoluteMouseX()), 5, 70);
-		g.drawString(String.format("Y:%2d", gc.getInput().getAbsoluteMouseY()), 5, 90);
+		g.drawString(String.format("X:%2d\nY:%2d", gc.getInput().getMouseX(),gc.getInput().getMouseY()), 5, 70);
 	}
 
 	public static void main(String[] args)
@@ -97,11 +111,13 @@ public class SimpleSlickGame extends BasicGame{
 		{
 			AppGameContainer appgc;
 			appgc = new AppGameContainer(new SimpleSlickGame("Simple Slick Game"));
+			appgc.setAlwaysRender(true);
 			//appgc.setMultiSample(8);
 			//appgc.setTargetFrameRate(60);
 			//appgc.setVSync(true);
 			//appgc.setTargetFrameRate(120);
-			appgc.setDisplayMode(700, 700, false);
+			appgc.setDisplayMode(640, 480, false);
+
 			//appgc.setDisplayMode(1920, 1080, true);
 			appgc.start();
 		}

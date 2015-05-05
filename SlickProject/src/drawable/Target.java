@@ -51,10 +51,10 @@ public class Target extends Movable {
 			if (hitBox.checkIfIntersects(p.getHitBox())) {
 				p.setHitSomething(true);
 				color = new Color((float)Math.random(),(float)Math.random(),(float)Math.random());
-				System.out.println("Hit");
+				//System.out.println("Hit");
 			}
 		}
-		System.out.println("direction: " + direction);
+		//System.out.println("direction: " + direction);
 		// System.out.println("Total Speed:"+totalSpeed);
 		// System.out.println("Target Direction: "+getCenter());
 	}

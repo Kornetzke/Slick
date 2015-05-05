@@ -46,7 +46,7 @@ public class Ship extends Movable {
 		target = SimpleSlickGame.target[0];
 		
 		turnSpeed = 200;
-		speed = 0;
+		speed = 20;
 
 		weapons = new ArrayList<Weapon>();
 		//weapons.add(new Weapon(this,19,81, "hey", 100.0f));
@@ -83,8 +83,8 @@ public class Ship extends Movable {
 		else
 			firing = false;
 
-		float mX = gc.getInput().getAbsoluteMouseX();
-		float mY = gc.getInput().getAbsoluteMouseY();
+		float mX = gc.getInput().getMouseX();
+		float mY = gc.getInput().getMouseY();
 
 		setTargetDirection(mX, mY);
 		
@@ -98,7 +98,7 @@ public class Ship extends Movable {
 		
 		hitBox.update(this);
 		
-		//System.out.println("ShipD: "+direction);
+		//System.out.println(String.format("Ship: d=%2.2f x=%2.2f y=%2.2f", direction, x,y));
 		
 		//updatePosition(delta);
 		updateFiring(gc, delta);
