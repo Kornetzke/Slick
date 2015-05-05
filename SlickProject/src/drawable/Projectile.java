@@ -32,7 +32,7 @@ public class Projectile extends Movable{
 		this.direction = direction;
 		this.targetDirection = direction;
 		this.speed = 1000;
-		this.turnSpeed = 50;
+		this.turnSpeed = 00;
 		this.maximumRange = 1000;
 
 		hitBox = new HitBox();

@@ -66,10 +66,10 @@ public class Target extends Movable {
 		// g.setAntiAlias(true);
 		g.setLineWidth(2.0f);
 		g.setColor(Color.pink);
-		g.rotate(middle.x, middle.y, (float) Math.toDegrees(direction));
+		//g.rotate(middle.x, middle.y, (float) Math.toDegrees(direction));
 		g.setColor(color);
-		g.drawLine(middle.x, middle.y, middle.x, middle.y-2000);
-		g.rotate(middle.x, middle.y, (float) Math.toDegrees(-direction));
+		//g.drawLine(middle.x, middle.y, middle.x, middle.y-2000);
+		//g.rotate(middle.x, middle.y, (float) Math.toDegrees(-direction));
 		g.drawOval(x, y, width, height);
 		g.drawOval(getCenterX() - 3, getCenterY() - 3, 6, 6);
 

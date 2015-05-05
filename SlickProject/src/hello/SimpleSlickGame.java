@@ -37,11 +37,11 @@ public class SimpleSlickGame extends BasicGame{
 		gc.setMultiSample(0);
 		image = new Image("Resources/Fighter150W.png");
 		
-		target = new Target[5];
+		target = new Target[500];
 		
 		
 		for(int x = 0;x< target.length;x++ ){
-			target[x] = new Target(200,200,25,25);
+			target[x] = new Target(326,326,24,24);
 		}
 		
 		testShip = new Ship();
@@ -72,17 +72,17 @@ public class SimpleSlickGame extends BasicGame{
 		
 		long time = gc.getTime();
 		
-		
+		/*
 		g.rotate(x+width/2, y+height/2, deg);
 		//g.drawImage(image, x, y);
 		g.drawLine(x+width/2, y+height/2, x+width/2, -600);
 		g.rotate(x+width/2, y+height/2, -deg);
-		
+		*/
 		for(Target t : target){
 			
 			t.draw(gc, g);
 		}
-		testShip.draw(gc, g);
+		//testShip.draw(gc, g);
 		
 		drawTime = gc.getTime() - time;
 		g.drawString("drawTime: "+drawTime, 5, 30);
@@ -101,7 +101,7 @@ public class SimpleSlickGame extends BasicGame{
 			//appgc.setTargetFrameRate(60);
 			//appgc.setVSync(true);
 			//appgc.setTargetFrameRate(120);
-			appgc.setDisplayMode(640, 480, false);
+			appgc.setDisplayMode(700, 700, false);
 			//appgc.setDisplayMode(1920, 1080, true);
 			appgc.start();
 		}
