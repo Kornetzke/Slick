@@ -48,13 +48,27 @@ public class Ship extends Movable {
 		target = SimpleSlickGame.target[0];
 		
 		turnSpeed = 200;
-		speed = 20;
 
 		weapons = new ArrayList<Weapon>();
 		//weapons.add(new Weapon(this,19,81, "hey", 100.0f));
 		//weapons.add(new Weapon(this,105,81, "hey", 100.0f));
 		weapons.add(new Weapon(this,62,15, "hey", 5f));
 		
+		
+		
+		buildHitBox();
+		
+		throttle = new Throttle(500,5,0,1);
+		
+		name = "ship";
+		health = 1;
+		sheilds = 1;
+		firing = true;
+
+	}
+
+	private void buildHitBox() {
+
 		Point2D.Float middle = getCenter();
 		
 		hitBox = new HitBox();
@@ -63,14 +77,8 @@ public class Ship extends Movable {
 		hitBox.addPoint(new Point(middle.x+10,middle.y+10));
 		hitBox.addPoint(new Point(middle.x-10,middle.y+10));
 		hitBox.buildHitBox();
+		hitBox.update(this);
 		
-		throttle = new Throttle(500,1,0,1);
-		
-		name = "ship";
-		health = 1;
-		sheilds = 1;
-		firing = true;
-
 	}
 
 	@Override
@@ -115,7 +123,7 @@ public class Ship extends Movable {
 
 		updateDirection(delta);
 
-		System.out.println(throttle.getCurrentThrottle());
+		System.out.println(throttle.getCurrentThrottle()+" "+throttle.getSpeed());
 		
 		x += displacementX = (float) Math.sin(direction) * throttle.getSpeed() * delta / 1000;
 		y += displacementY = (float) Math.cos(direction) * -throttle.getSpeed() * delta/ 1000;

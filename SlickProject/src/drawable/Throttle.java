@@ -2,8 +2,15 @@ package drawable;
 
 import java.awt.geom.Point2D.Float;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.ShapeFill;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.fills.GradientFill;
+import org.newdawn.slick.geom.Rectangle;
+import org.newdawn.slick.geom.ShapeRenderer;
 
 public class Throttle {
 
@@ -45,9 +52,18 @@ public class Throttle {
 		float x = shipCenter.x+gc.getWidth()/2-30;
 		float y = shipCenter.y-gc.getHeight()/2+10;
 		
+		float width = 20;
+		float height = 50;
+		float startX = x + width;
+		float startY = y + height+g.getLineWidth()/2;
 		
-		g.drawRect(x, y, 20, 50);
-		g.drawLine(x+10, y+50, x+10, y+50-(50*currentThrottle/maxThrottle));
+		ShapeFill fill= new GradientFill(startX, startY, Color.green, startX-width, startY-height, Color.red);
+		Rectangle r = new Rectangle(startX,startY,-width,-height*currentThrottle/maxThrottle);
+	
+		ShapeRenderer.fill(r, fill);
+		
+		ShapeRenderer.draw(new Rectangle(x,y,width,height), new GradientFill(startX, startY, Color.green, startX-width, startY-height, Color.transparent));
+		//g.drawRect(x, y, width, height);
 		
 	}
 
@@ -87,10 +103,10 @@ public class Throttle {
 	}
 	
 	public void increaseThrottle(){
-		setCurrentThrottle(this.currentThrottle + .005f);
+		setCurrentThrottle(this.currentThrottle + .01f);
 	}
 	public void decreaseThrottle(){
-		setCurrentThrottle(this.currentThrottle - .005f);
+		setCurrentThrottle(this.currentThrottle - .01f);
 	}
 
 	public float getMaxThrottle() {

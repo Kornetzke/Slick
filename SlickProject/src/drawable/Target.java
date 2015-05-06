@@ -30,16 +30,25 @@ public class Target extends Movable {
 		this.width = width;
 		this.height = height;
 
-		hitBox = new HitBox();
-		hitBox.addPoint(new Point(x + width / 2, y));
-		hitBox.addPoint(new Point(x, y + height));
-		hitBox.addPoint(new Point(x + width, y + height));
-		hitBox.buildHitBox();
+		buildHitBox();
+		
+		
 		direction = (float) (Math.random() * Math.PI * 2);
 		speed = 70;
 		
 		weapon = new Weapon(this,width/2,height/2, "hey", 1f);
 
+	}
+
+	private void buildHitBox() {
+		
+		hitBox = new HitBox();
+		hitBox.addPoint(new Point(x + width / 2, y));
+		hitBox.addPoint(new Point(x, y + height));
+		hitBox.addPoint(new Point(x + width, y + height));
+		hitBox.buildHitBox();
+		hitBox.update(this);
+		
 	}
 
 	public void update(GameContainer gc, int delta) {

@@ -35,6 +35,15 @@ public class Projectile extends Movable{
 		this.turnSpeed = 00;
 		this.maximumRange = 1000;
 
+		
+		buildHitBox();
+
+		
+		hitSomething = false;
+		
+	}
+	
+	private void buildHitBox() {
 		hitBox = new HitBox();
 		hitBox.addPoint(new Point(x,y));
 		hitBox.addPoint(new Point(x,y+height));
@@ -42,11 +51,10 @@ public class Projectile extends Movable{
 		hitBox.addPoint(new Point(x+width,y));
 		hitBox.direction = direction;
 		hitBox.buildHitBox();
-		
-		hitSomething = false;
+		hitBox.update(this);
 		
 	}
-	
+
 	public void setTarget(Movable target){
 		this.target = target;
 	}
