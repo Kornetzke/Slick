@@ -11,6 +11,7 @@ import java.util.LinkedList;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
@@ -22,6 +23,7 @@ public class Ship extends Movable {
 	int sheilds;
 	boolean firing;
 	HitBox hitBox;
+	Throttle throttle;
 	boolean followTarget;
 	Movable target;
 	
@@ -51,7 +53,7 @@ public class Ship extends Movable {
 		weapons = new ArrayList<Weapon>();
 		//weapons.add(new Weapon(this,19,81, "hey", 100.0f));
 		//weapons.add(new Weapon(this,105,81, "hey", 100.0f));
-		weapons.add(new Weapon(this,62,15, "hey", 1.0f));
+		weapons.add(new Weapon(this,62,15, "hey", 5f));
 		
 		Point2D.Float middle = getCenter();
 		
@@ -62,6 +64,7 @@ public class Ship extends Movable {
 		hitBox.addPoint(new Point(middle.x-10,middle.y+10));
 		hitBox.buildHitBox();
 		
+		throttle = new Throttle(500,1,0,1);
 		
 		name = "ship";
 		health = 1;
@@ -83,8 +86,8 @@ public class Ship extends Movable {
 		else
 			firing = false;
 
-		float mX = gc.getInput().getMouseX();
-		float mY = gc.getInput().getMouseY();
+		float mX = (gc.getInput().getMouseX()-gc.getWidth()/2)+getCenter().x;
+		float mY = (gc.getInput().getMouseY()-gc.getHeight()/2)+getCenter().y;
 
 		setTargetDirection(mX, mY);
 		
@@ -92,9 +95,32 @@ public class Ship extends Movable {
 		setTargetDirection(target.getCenter());
 		}
 		
+		if(gc.getInput().isKeyDown(Input.KEY_S)){
+			if(gc.getInput().isKeyDown(Input.KEY_LSHIFT)){
+				throttle.changeThrottleBy(-throttle.maxThrottle);
+			}
+			
+			throttle.decreaseThrottle();
+		}else if(gc.getInput().isKeyDown(Input.KEY_W)){
+			if(gc.getInput().isKeyDown(Input.KEY_LSHIFT)){
+				throttle.changeThrottleBy(throttle.maxThrottle);
+			}
+			throttle.increaseThrottle();
+		}
+		
+		
+		
+		throttle.update(gc, delta);
 		//direction += Math.toRadians(turnSpeed)*delta/1000;
 
-		super.update(gc, delta);
+		updateDirection(delta);
+
+		System.out.println(throttle.getCurrentThrottle());
+		
+		x += displacementX = (float) Math.sin(direction) * throttle.getSpeed() * delta / 1000;
+		y += displacementY = (float) Math.cos(direction) * -throttle.getSpeed() * delta/ 1000;
+		
+		
 		
 		hitBox.update(this);
 		
@@ -120,6 +146,9 @@ public class Ship extends Movable {
 				(float) Math.toDegrees(-direction));
 		
 		hitBox.draw(gc, g);
+		
+		
+		throttle.draw(gc,g,getCenter());
 
 	}
 	

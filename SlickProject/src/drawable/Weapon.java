@@ -19,7 +19,7 @@ public class Weapon  {
 	String name;
 	float xMiddle, yMiddle,direction;
 	float offSetFromCenterOfShipX,offSetFromCenterOfShipY;
-	Ship ship;
+	Movable ship;
 	float fireRate;
 	float fireCD;
 	float coneOfFire;
@@ -27,13 +27,13 @@ public class Weapon  {
 	
 	ArrayList<Projectile> projectiles;
 
-	public Weapon(Ship ship,float x, float y, String name, float fireRate) {
+	public Weapon(Movable ship,float x, float y, String name, float fireRate) {
 		this.ship = ship;
 		this.xMiddle = ship.getX()+x;
 		this.yMiddle = ship.getY()+y;
 		this.offSetFromCenterOfShipX = this.xMiddle - ship.getCenter().x;
 		this.offSetFromCenterOfShipY = this.yMiddle - ship.getCenter().y;
-		this.coneOfFire = (float) Math.toRadians(0);
+		this.coneOfFire = (float) Math.toRadians(15);
 		this.direction = ship.getDirection();
 		this.name = name;
 		this.fireRate = fireRate;

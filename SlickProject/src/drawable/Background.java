@@ -16,8 +16,7 @@ public class Background extends Drawable{
 		try {
 			image = new Image("Resources/Space.png");
 		} catch (SlickException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
 		}
 		width = image.getWidth();
 		height = image.getHeight();

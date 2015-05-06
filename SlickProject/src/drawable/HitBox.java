@@ -66,11 +66,11 @@ public class HitBox {
 	
 	
 	public void draw(GameContainer gc, Graphics g) {
-		/*
-		g.setAntiAlias(true);
+		
+		
 		g.setColor(Color.orange);
 		g.draw(hitBox);
-		*/
+		
 		
 		
 		

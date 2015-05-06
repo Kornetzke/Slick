@@ -13,6 +13,7 @@ public class Target extends Movable {
 
 	Color color;
 	HitBox hitBox;
+	Weapon weapon;
 
 	public Target() {
 		x = y = width = height = 0;
@@ -36,6 +37,8 @@ public class Target extends Movable {
 		hitBox.buildHitBox();
 		direction = (float) (Math.random() * Math.PI * 2);
 		speed = 70;
+		
+		weapon = new Weapon(this,width/2,height/2, "hey", 1f);
 
 	}
 
@@ -54,6 +57,8 @@ public class Target extends Movable {
 				//System.out.println("Hit");
 			}
 		}
+		
+		weapon.update(gc, delta, true);
 		//System.out.println("direction: " + direction);
 		// System.out.println("Total Speed:"+totalSpeed);
 		// System.out.println("Target Direction: "+getCenter());
@@ -74,6 +79,7 @@ public class Target extends Movable {
 		g.drawOval(getCenterX() - 3, getCenterY() - 3, 6, 6);
 
 		hitBox.draw(gc, g);
+		weapon.draw(gc, g);
 
 	}
 
