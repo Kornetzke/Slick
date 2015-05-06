@@ -1,12 +1,6 @@
 package drawable;
 
 import hello.SimpleSlickGame;
-
-
-
-
-
-
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -69,7 +63,7 @@ public class Weapon  {
 			try {
 				
 				int index = (int) Math.round((Math.random()*(SimpleSlickGame.target.length-1)));
-				System.out.println("Index: "+index);
+				//System.out.println("Index: "+index);
 				
 				
 				Projectile p = new Projectile(xMiddle, yMiddle, direction+(float)(Math.random()*coneOfFire-coneOfFire/2));

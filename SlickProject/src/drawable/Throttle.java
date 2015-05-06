@@ -103,10 +103,10 @@ public class Throttle {
 	}
 	
 	public void increaseThrottle(){
-		setCurrentThrottle(this.currentThrottle + .01f);
+		setCurrentThrottle(this.currentThrottle + .005f);
 	}
 	public void decreaseThrottle(){
-		setCurrentThrottle(this.currentThrottle - .01f);
+		setCurrentThrottle(this.currentThrottle - .005f);
 	}
 
 	public float getMaxThrottle() {

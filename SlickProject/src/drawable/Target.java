@@ -59,7 +59,7 @@ public class Target extends Movable {
 
 		hitBox.update(this);
 
-		for (Projectile p : SimpleSlickGame.testShip.getProjectiles()) {
+		for (Projectile p : SimpleSlickGame.playerShip.getProjectiles()) {
 			if (hitBox.checkIfIntersects(p.getHitBox())) {
 				p.setHitSomething(true);
 				color = new Color((float)Math.random(),(float)Math.random(),(float)Math.random());
@@ -157,6 +157,10 @@ public class Target extends Movable {
 	public float reflectXaxis(float dir) {
 		return (float) (Math.PI + (Math.PI * 2 - direction));
 
+	}
+	
+	public Color getColor(){
+		return color;
 	}
 
 }

@@ -1,4 +1,5 @@
 package hello;
+import java.awt.geom.Point2D;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.newdawn.slick.AppGameContainer;
@@ -16,7 +17,7 @@ import drawable.Target;
 public class SimpleSlickGame extends BasicGame{
 
 	public static Target[] target;
-	public static Ship testShip;
+	public static Ship playerShip;
 	public static Background background;
 	
 	
@@ -42,11 +43,11 @@ public class SimpleSlickGame extends BasicGame{
 			target[x] = new Target(gc.getWidth()/2,gc.getHeight()/2,24,24);
 		}
 		
-		testShip = new Ship();
+		playerShip = new Ship();
 		
 		background = new Background();
 		
-		focus = testShip;
+		focus = playerShip;
 		
 		
 	}
@@ -58,7 +59,7 @@ public class SimpleSlickGame extends BasicGame{
 		if(gc.getInput().isKeyPressed(Input.KEY_RBRACKET)){
 		focus = target[0];
 		}else if(gc.getInput().isKeyPressed(Input.KEY_LBRACKET)){
-			focus = testShip;
+			focus = playerShip;
 		}
 		
 		long time = gc.getTime();
@@ -69,7 +70,7 @@ public class SimpleSlickGame extends BasicGame{
 			t.update(gc, delta);
 		}
 		
-		testShip.update(gc, delta);
+		playerShip.update(gc, delta);
 		//System.out.println(testShip.getDirection());
 		
 		updateTime = gc.getTime() - time;
@@ -95,7 +96,7 @@ public class SimpleSlickGame extends BasicGame{
 			
 			t.draw(gc, g);
 		}
-		testShip.draw(gc, g);
+		playerShip.draw(gc, g);
 		
 		g.translate(-xOffset, -yOffset);
 	
@@ -105,6 +106,7 @@ public class SimpleSlickGame extends BasicGame{
 		g.drawString(String.format("X:%2d\nY:%2d", gc.getInput().getMouseX(),gc.getInput().getMouseY()), 5, 70);
 		
 	}
+
 
 	public static void main(String[] args)
 	{
